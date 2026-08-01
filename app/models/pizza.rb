@@ -16,6 +16,6 @@ class Pizza < ApplicationRecord
   private
 
   def generate_fingerprint
-    self.fingerprint = PizzaFingerprint.new(self).call
+    self.fingerprint = PizzaFingerprint.from(self).call
   end
 end

@@ -1,0 +1,4 @@
+one:
+  cart: one
+  quantity: 1
+  cart_itemable: one (Pizza)

@@ -10,11 +10,15 @@ class PizzasController < ApplicationController
   end
 
   def create
-    @pizza = Pizza.new(pizza_params)
-    if @pizza.save
-      redirect_to @pizza, notice: "Pizza was successfully created."
+    fingerprint = PizzaFingerprint.new(pizza_params).call
+
+    existing_pizza = Pizza.find_by(fingerprint: fingerprint)
+
+    if existing_pizza.present?
+      @pizza = existing_pizza
     else
-      render :new
+      @pizza = Pizza.new(pizza_params)
+      @pizza.save!
     end
   end
 
@@ -22,14 +26,13 @@ class PizzasController < ApplicationController
 
   def pizza_params
     params
-      .require(:pizza)
       .permit(
         :size,
         :crust,
         :dough,
         :base_pizza_id,
         :price,
-        pizza_ingredients_attributes: [ :id, :pizza_topping_id, :quantity, :_destroy ]
+        pizza_ingredients_attributes: [ :pizza_topping_id, :quantity ]
       )
   end
 end

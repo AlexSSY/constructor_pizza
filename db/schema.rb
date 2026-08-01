@@ -100,7 +100,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_30_012146) do
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
-    t.string "hashed_password", null: false
+    t.string "password_digest", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

@@ -1,15 +1,25 @@
 # This service is responsible for generating a unique fingerprint for a given pizza based on its attributes and toppings.
 class PizzaFingerprint
-  # Initializes the service with a pizza object.
-  # @param pizza [Pizza] The pizza object for which the fingerprint will be generated.
-  def initialize(pizza)
-    @pizza = pizza
+  def initialize(base_pizza_id:, size:, crust:, dough:, pizza_ingredients:)
+    @base_pizza_id = base_pizza_id
+    @size = size
+    @crust = crust
+    @dough = dough
+    @pizza_ingredients = pizza_ingredients
   end
 
-  attr_reader :pizza
+  def self.from(pizza) = new(
+      base_pizza_id: pizza.base_pizza_id,
+      size: pizza.size,
+      crust: pizza.crust,
+      dough: pizza.dough,
+      pizza_ingredients: pizza.pizza_ingredients.map do |ingredient|
+        { pizza_topping_id: ingredient.pizza_topping_id, quantity: ingredient.quantity }
+      end
+    )
 
-  # Generates the fingerprint for the pizza.
-  # @return [String] The generated fingerprint as a hexadecimal string.
+  attr_reader :base_pizza_id, :size, :crust, :dough, :pizza_ingredients
+
   def call
     Digest::SHA256.hexdigest(fingerprint_string)
   end
@@ -17,11 +27,11 @@ class PizzaFingerprint
   private
 
   def list_of_key_attributes
-    [ pizza.base_pizza_id, pizza.size, pizza.crust, pizza.dough ]
+    [ base_pizza_id, size, crust, dough ]
   end
 
   def list_of_toppings_ids_and_quantities
-    pizza.pizza_ingredients.map { |ingredient| [ ingredient.pizza_topping_id, ingredient.quantity ] }.sort
+    pizza_ingredients.map { |ingredient| [ ingredient[:pizza_topping_id], ingredient[:quantity] ] }.sort
   end
 
   def fingerprint_string
