@@ -42,6 +42,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_30_012146) do
   create_table "base_pizzas", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "pizza_category_id"
+    t.decimal "price", precision: 10, scale: 2, null: false
     t.string "slug", null: false
     t.index ["pizza_category_id"], name: "index_base_pizzas_on_pizza_category_id"
   end

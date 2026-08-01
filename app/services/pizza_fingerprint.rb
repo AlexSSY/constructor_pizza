@@ -17,7 +17,7 @@ class PizzaFingerprint
   private
 
   def list_of_key_attributes
-    [ pizza.pizza_base_id, pizza.size, pizza.crust, pizza.dough ]
+    [ pizza.base_pizza_id, pizza.size, pizza.crust, pizza.dough ]
   end
 
   def list_of_toppings_ids_and_quantities

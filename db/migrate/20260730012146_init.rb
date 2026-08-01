@@ -27,6 +27,7 @@ class Init < ActiveRecord::Migration[8.1]
     create_table :base_pizzas do |t|
       t.string :slug, null: false
       t.string :name, null: false
+      t.decimal :price, precision: 10, scale: 2, null: false
       t.references :pizza_category, foreign_key: true
     end
 

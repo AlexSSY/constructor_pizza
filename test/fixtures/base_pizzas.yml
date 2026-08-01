@@ -1,0 +1,11 @@
+pepperoni_base:
+  pizza_category: best_seller
+  slug: pepperoni
+  name: Pepperoni
+  price: 12.99
+
+sicilian_base:
+  pizza_category: summer_taste
+  slug: sicilian
+  name: Sicilian
+  price: 14.99
