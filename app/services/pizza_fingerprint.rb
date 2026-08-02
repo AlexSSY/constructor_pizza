@@ -1,12 +1,10 @@
 # This service is responsible for generating a unique fingerprint for a given pizza based on its attributes and toppings.
-class PizzaFingerprint
-  def initialize(base_pizza_id:, size:, crust:, dough:, pizza_ingredients:)
-    @base_pizza_id = base_pizza_id
-    @size = size
-    @crust = crust
-    @dough = dough
-    @pizza_ingredients = pizza_ingredients
-  end
+class PizzaFingerprint < ApplicationService
+  option :base_pizza_id
+  option :size
+  option :crust
+  option :dough
+  option :pizza_ingredients
 
   def self.from(pizza) = new(
       base_pizza_id: pizza.base_pizza_id,

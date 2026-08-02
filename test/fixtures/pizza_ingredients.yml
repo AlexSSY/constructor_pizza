@@ -1,4 +1,9 @@
 one:
   pizza: one
-  pizza_topping: pepperoni
+  pizza_topping: alfredo
   quantity: 1
+
+two:
+  pizza: two
+  pizza_topping: alfredo
+  quantity: 2

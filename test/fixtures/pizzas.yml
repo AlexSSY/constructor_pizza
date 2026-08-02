@@ -20,3 +20,11 @@ one:
   dough: regular
   price: 10.0
   fingerprint: <%= 'spagetti' %>
+
+two:
+  base_pizza: pepperoni_base
+  size: medium
+  crust: thin
+  dough: regular
+  price: 10.0
+  fingerprint: <%= 'ola' %>

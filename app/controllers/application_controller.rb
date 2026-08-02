@@ -20,26 +20,6 @@ class ApplicationController < ActionController::Base
   end
 
   def current_cart
-    @current_cart ||= begin
-      if user_signed_in?
-        cart = get_or_create_cart
-        cart.user = current_user if cart.user.nil?
-        cart.save! if cart.changed?
-      else
-
-      end
-      cart = Cart.find_by(id: session[:cart_id])
-      if cart.nil?
-        cart = current_user&.cart || Cart.create
-        session[:cart_id] = cart.id
-      end
-      cart
-    end
-  end
-
-  private
-
-  def get_or_create_cart
-    Cart.find_by(id: session[:cart_id]) || Cart.create
+    @current_cart ||= Cart.find_by(id: session[:cart_id]) || Cart.create.tap { |cart| session[:cart_id] = cart.id }
   end
 end
