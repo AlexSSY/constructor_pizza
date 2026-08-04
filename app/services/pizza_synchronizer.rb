@@ -7,8 +7,8 @@ class PizzaSynchronizer < ApplicationService
   option :pizza_fingerprint_service_class, default: -> { PizzaFingerprint }
 
   def call
-    @pizza.price = pizza_price_service_class.new(pizza: @pizza).call
-    @pizza.fingerprint = pizza_fingerprint_service_class.from(@pizza).call
+    @pizza.price = pizza_price_service_class.new(pizza.id).call
+    @pizza.fingerprint = pizza_fingerprint_service_class.from(pizza).call
     @pizza.save!
   end
 end

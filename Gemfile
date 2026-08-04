@@ -68,3 +68,5 @@ group :test do
 end
 
 gem "dry-initializer", "~> 3.2"
+
+gem "dry-operation", "~> 1.1"

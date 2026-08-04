@@ -27,7 +27,7 @@ class PizzaPriceServiceTest < ActiveSupport::TestCase
   end
 
   test "should calculate the total price of a pizza" do
-    service = PizzaPriceService.new(pizza: @pizza)
+    service = PizzaPriceService.new(@pizza.id)
     total_price = service.call
     assert_equal @expected_price, total_price
   end

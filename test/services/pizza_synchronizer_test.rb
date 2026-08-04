@@ -39,7 +39,7 @@ class PizzaSynchronizerTest < ActiveSupport::TestCase
 
   test "should calculate all" do
     service = PizzaSynchronizer.new(
-      @pizza,
+      @pizza.id,
       pizza_price_service_class: FakePizzaPriceService,
       pizza_fingerprint_service_class: FakePizzaFingerprintService
     )
