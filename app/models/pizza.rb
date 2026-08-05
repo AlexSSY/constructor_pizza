@@ -11,11 +11,16 @@ class Pizza < ApplicationRecord
 
   accepts_nested_attributes_for :pizza_ingredients, allow_destroy: true
 
-  before_save :generate_fingerprint
+  before_save :set_fingerprint
+  before_save :set_price
 
   private
 
-  def generate_fingerprint
-    self.fingerprint = PizzaFingerprint.from(self).call
+  def set_fingerprint
+    self.fingerprint = FingerprintCalculator.calculate(self)
+  end
+
+  def set_price
+    self.price = PriceCalculator.calculate(self)
   end
 end

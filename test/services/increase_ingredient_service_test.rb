@@ -18,12 +18,15 @@ class IncreaseIngredientServiceTest < ActiveSupport::TestCase
   end
 
   test "should increase the quantity of a pizza ingredient" do
-    service = IncreaseIngredientService.new(pizza_id: @pizza.id, topping_id: @pizza_topping.id, pizza_synchronizer_class: FakePizzaSynchronizer)
-    @pizza_ingredient = service.call
-    assert_equal true, @pizza_ingredient.persisted?
-    assert_equal 2, @pizza_ingredient.quantity
-    service.call
-    assert_equal 3, @pizza_ingredient.reload.quantity
+    inc = proc { IncreaseIngredientService.call(
+      pizza_id: @pizza.id,
+      topping_id: @pizza_topping.id
+    ) }
+    result = inc.call
+    assert result.success?
+    assert_equal 2, result.value!.quantity
+    inc.call
+    assert_equal 3, result.value!.quantity
   end
 
   test "should recalculate the pizza fingerprint after increasing the ingredient" do
