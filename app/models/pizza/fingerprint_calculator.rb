@@ -1,4 +1,4 @@
-class Pizza::FingerprintCalculator
+class Pizza::FingerprintCalculator < ModelCalculator
   option :base_pizza_id
   option :size
   option :crust

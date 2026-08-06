@@ -27,8 +27,6 @@ class PizzasController < ApplicationController
   def set_pizza
     @requested_pizza = Pizza.new(pizza_params)
     @requested_pizza.validate!
-
-    @pizza = Pizza.find_by(fingerprint: @requested_pizza.fingerprint)
   end
 
   def pizza_params
