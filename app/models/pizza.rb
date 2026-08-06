@@ -17,7 +17,13 @@ class Pizza < ApplicationRecord
   private
 
   def set_fingerprint
-    self.fingerprint = FingerprintCalculator.calculate(self)
+    self.fingerprint = FingerprintCalculator.calculate(
+      base_pizza_id: self.base_pizza_id,
+      size: self.size,
+      crust: self.crust,
+      dough: self.dough,
+      pizza_ingredients: self.pizza_ingredients
+    )
   end
 
   def set_price

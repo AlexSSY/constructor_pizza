@@ -1,6 +1,4 @@
 class Pizza::FingerprintCalculator
-  extend Dry::Initializer
-
   option :base_pizza_id
   option :size
   option :crust

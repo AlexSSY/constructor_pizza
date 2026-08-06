@@ -1,16 +1,5 @@
 require "test_helper"
 
-class FakePizzaSynchronizer
-  def initialize(pizza)
-    @pizza = pizza
-  end
-
-  def call
-    @pizza.price = 500
-    @pizza.fingerprint = "fake_fingerprint"
-  end
-end
-
 class IncreaseIngredientServiceTest < ActiveSupport::TestCase
   def setup
     @pizza_topping = pizza_toppings(:alfredo)
@@ -18,22 +7,26 @@ class IncreaseIngredientServiceTest < ActiveSupport::TestCase
   end
 
   test "should increase the quantity of a pizza ingredient" do
-    inc = proc { IncreaseIngredientService.call(
-      pizza_id: @pizza.id,
-      topping_id: @pizza_topping.id
-    ) }
-    result = inc.call
+    result = IncreaseIngredientService.call(pizza_id: @pizza.id, topping_id: @pizza_topping.id)
     assert result.success?
     assert_equal 2, result.value!.quantity
-    inc.call
+    result = IncreaseIngredientService.call(pizza_id: @pizza.id, topping_id: @pizza_topping.id)
     assert_equal 3, result.value!.quantity
   end
 
-  test "should recalculate the pizza fingerprint after increasing the ingredient" do
-    service = IncreaseIngredientService.new(pizza_id: @pizza.id, topping_id: @pizza_topping.id)
+  test "should recalculate the pizza's fingerprint after increasing the ingredient" do
     original_fingerprint = @pizza.fingerprint
-    service.call
+    result = IncreaseIngredientService.call(pizza_id: @pizza.id, topping_id: @pizza_topping.id)
+    assert result.success?
     @pizza.reload
     assert_not_equal original_fingerprint, @pizza.fingerprint
+  end
+
+  test "should recalculate the pizza's price after increasing the ingredient" do
+    price_before = @pizza.price
+    result = IncreaseIngredientService.call(pizza_id: @pizza.id, topping_id: @pizza_topping.id)
+    assert result.success?
+    @pizza.reload
+    assert_equal price_before + @pizza_topping.price, @pizza.price
   end
 end

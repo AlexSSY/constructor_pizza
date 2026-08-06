@@ -1,6 +1,4 @@
 class Pizza::PriceCalculator < ModelCalculator
-  extend Dry::Initializer
-
   param :pizza
 
   def calculate

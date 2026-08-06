@@ -6,14 +6,14 @@ class IncreaseIngredientService < ApplicationService
     Pizza.transaction do
       pizza = step find_pizza
       ingredient = step increase_quantity(pizza)
-      pizza = step update_pizza(pizza)
+      step update_pizza(pizza)
       ingredient
     end
   end
 
   def find_pizza
-    pizza = Pizza.lock.find(pizza_id)
-    pizza.present? ? Success(pizza) : Failure(:pizza_not_found)
+    pizza Pizza.lock.find!(pizza_id)
+    Success(pizza)
   end
 
   def increase_quantity(pizza)
